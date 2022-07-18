@@ -1,3 +1,5 @@
+// Package gcloghook implements a hook for the github.com/sirupsen/logrus package
+// to send structured log records to the Google Cloud Logging service.
 package gcploghook
 
 import (
@@ -14,7 +16,7 @@ import (
 	"google.golang.org/genproto/googleapis/api/monitoredres"
 )
 
-type InstanceInfo struct {
+type instanceInfo struct {
 	Zone string `json:"zone,omitempty"`
 	Name string `json:"name,omitempty"`
 	ID   string `json:"id,omitempty"`
@@ -24,7 +26,7 @@ type StackDriverHook struct {
 	client       *logging.Client
 	errorClient  *errorreporting.Client
 	logger       *logging.Logger
-	instanceInfo *InstanceInfo
+	instanceInfo *instanceInfo
 }
 
 var logLevelMappings = map[logrus.Level]logging.Severity{
@@ -37,6 +39,11 @@ var logLevelMappings = map[logrus.Level]logging.Severity{
 	logrus.PanicLevel: logging.Critical,
 }
 
+// Function NewStackDriverHook allocates a new hook ready to
+// be used for logrus.AddHook. The hook will send log records to
+// the Google Cloud Logging API, and if the logrus error record
+// uses a level of ErrorLevel or higher, the record will also be
+// forwarded to the Error reporting API.
 func NewStackDriverHook(googleProject string, logName string, logInstanceID string, logInstanceName string, logInstanceZone string) (*StackDriverHook, error) {
 	ctx := context.Background()
 
@@ -55,7 +62,7 @@ func NewStackDriverHook(googleProject string, logName string, logInstanceID stri
 		return nil, err
 	}
 
-	instanceInfo := &InstanceInfo{
+	instanceInfo := &instanceInfo{
 		ID:   logInstanceID,
 		Name: logInstanceName,
 		Zone: logInstanceZone,

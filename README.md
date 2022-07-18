@@ -27,7 +27,7 @@ main() |{
     myLog.SetOutput(os.Stdout)
     log_name := os.Getenv("LOG_NAME")
     if log_name != "" {
-        hook, err := gcploghook.NewStackDriverHook(app.GoogleProject, log_name, os.Getenv("LOG_INSTANCEID"), os.Getenv("LOG_INSTANCENAME"), os.Getenv("LOG_INSTANCEZONE"))
+        hook, err := gcploghook.NewStackDriverHook(googleProject, log_name, os.Getenv("LOG_INSTANCEID"), os.Getenv("LOG_INSTANCENAME"), os.Getenv("LOG_INSTANCEZONE"))
         if err != nil {
             myLog.WithError(err).Fatal("StackDriver")
         }
@@ -40,4 +40,8 @@ main() |{
 
 The environment variable `GOOGLE_APPLICATION_CREDENTIALS` needs to
 point to your credential .json file downloaded from Google Cloud
-Console.
+Console for the project named in `GOOGLE_CLOUD_PROJECT`. The
+environment variable LOG_NAME determines if the log is send via the
+Google Cloud logging API, if this is unset the code is assumed to
+run inside the Google Cloud Environment already, e.g. dockerized
+as a Google Cloud Run container and stdout receives the logs.

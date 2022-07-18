@@ -5,6 +5,7 @@ go 1.19
 require (
 	cloud.google.com/go/errorreporting v0.2.0
 	cloud.google.com/go/logging v1.5.0
+	github.com/andyfusniak/stackdriver-gae-logrus-plugin v0.1.3
 	github.com/sirupsen/logrus v1.8.1
 	google.golang.org/genproto v0.0.0-20220714211235-042d03aeabc9
 )
