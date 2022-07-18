@@ -1,6 +1,6 @@
 # gcploghook
 
-I used the blog artikle from Huy Ngo 
+I used the blog article from Huy Ngo 
 [4 tips for logging on GCP using golang and logrus](https://huynvk.dev/blog/4-tips-for-logging-on-gcp-using-golang-and-logrus)
 as a base for this small module. It is basically all that is
 needed to log from a go app to Google Cloud Logging. An example how
