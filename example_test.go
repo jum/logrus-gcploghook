@@ -8,7 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Example() {
+func ExampleNewStackDriverHook() {
 	googleProject := os.Getenv("GOOGLE_CLOUD_PROJECT")
 	myLog := logrus.New()
 	formatter := stackdriver.GAEStandardFormatter(
