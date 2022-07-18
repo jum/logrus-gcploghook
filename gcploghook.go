@@ -39,7 +39,7 @@ var logLevelMappings = map[logrus.Level]logging.Severity{
 	logrus.PanicLevel: logging.Critical,
 }
 
-// Function NewStackDriverHook allocates a new hook ready to
+// NewStackDriverHook allocates a new hook ready to
 // be used for logrus.AddHook. The hook will send log records to
 // the Google Cloud Logging API, and if the logrus error record
 // uses a level of ErrorLevel or higher, the record will also be
