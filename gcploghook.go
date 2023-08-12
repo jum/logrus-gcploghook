@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 	"runtime"
@@ -23,6 +24,7 @@ type instanceInfo struct {
 }
 
 type StackDriverHook struct {
+	io.Closer
 	client       *logging.Client
 	errorClient  *errorreporting.Client
 	logger       *logging.Logger
@@ -93,9 +95,13 @@ func NewStackDriverHook(googleProject string, logName string, logInstanceID stri
 	}, nil
 }
 
-func (sh *StackDriverHook) Close() {
-	sh.client.Close()
-	sh.errorClient.Close()
+func (sh *StackDriverHook) Close() error {
+	err := sh.client.Close()
+	err2 := sh.errorClient.Close()
+	if err == nil {
+		err = err2
+	}
+	return err
 }
 
 func (sh *StackDriverHook) Levels() []logrus.Level {
